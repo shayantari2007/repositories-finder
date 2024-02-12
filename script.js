@@ -6,7 +6,7 @@ function searchGitHubUser(username) {
       let repositories = JSON.parse(ajax.responseText);
       displayRepositories(repositories);
     } else {
-      console.log("Failed to fetch data.");
+      console.log("this user is not find");
     }
   };
   ajax.send();
