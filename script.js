@@ -19,10 +19,10 @@ async function displayRepositories() {
             repositoriesList.innerHTML = '';
             repositories.forEach(repository => {
                 let repositoryItem = document.createElement('ul');
-                repositoryItem.classList.add('col-6');
+                repositoryItem.classList.add('col-12', 'card', 'm-0', 'border', 'border-0', 'border-bottom', 'text-secondary');
                 let repositoryLink = document.createElement('a');
                 repositoryLink.href = 'javascript:void(0);';
-                repositoryLink.classList.add('btn', 'btn-outline-warning', 'w-100');
+                repositoryLink.classList.add('card-body', 'w-100');
                 let icon = document.createElement('i');
                 icon.classList.add('fas', 'fa-folder', 'text-primary', 'mx-2') ,
                     repositoryLink.appendChild(icon);
@@ -51,14 +51,14 @@ async function showRepositoryDetails(username, repoName) {
         repositoryDetails.innerHTML = '';
         data.forEach(item => {
             let contentItem = document.createElement('ul');
-            contentItem.classList.add('col-6');
+            contentItem.classList.add('col-12', 'card', 'm-0', 'border', 'border-0', 'border-bottom', 'text-warning');
             let icon = document.createElement('i');
             icon.classList.add('fas', item.type === 'dir' ? 'fa-folder' : 'fa-file', 'mx-2', 'text-dark');
             let itemName = document.createElement('span');
             itemName.textContent = item.name;
             let contentLink = document.createElement('a');
             contentLink.href = 'javascript:void(0);';
-            contentLink.classList.add('btn', 'btn-outline-info', 'w-100');
+            contentLink.classList.add('card-body', 'w-100');
             contentLink.appendChild(icon);
             contentLink.appendChild(itemName);
             contentLink.addEventListener('click', async () => {
@@ -92,14 +92,14 @@ async function showDirectoryContents(username, repoName, path) {
         repositoryDetails.innerHTML = '';
         data.forEach(item => {
             let contentItem = document.createElement('ul');
-            contentItem.classList.add('col-6', 'mb-3');
+            contentItem.classList.add('col-12', 'card', 'm-0', 'border', 'border-0', 'border-bottom', 'text-info');
             let icon = document.createElement('i');
             icon.classList.add('fas', item.type === 'dir' ? 'fa-folder' : 'fa-file', 'mx-2');
             let itemName = document.createElement('span');
             itemName.textContent = item.name;
             let contentLink = document.createElement('a');
             contentLink.href = 'javascript:void(0);';
-            contentLink.classList.add('btn', 'btn-outline-success', 'mx-5', 'w-100');
+            contentLink.classList.add('card-body', 'w-100');
             contentLink.appendChild(icon);
             contentLink.appendChild(itemName);
             contentLink.addEventListener('click', async () => {
@@ -121,5 +121,9 @@ async function showDirectoryContents(username, repoName, path) {
         console.error('Error fetching directory contents:', error);
     }
 }
+
+
+
+
 
 displayRepositories();
