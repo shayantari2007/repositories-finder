@@ -19,26 +19,40 @@ async function displayRepositories() {
             repositoriesList.innerHTML = '';
             repositories.forEach(repository => {
                 let repositoryItem = document.createElement('ul');
-                repositoryItem.classList.add('col-12', 'card', 'm-0', 'border', 'border-0', 'border-bottom', 'text-secondary');
+                repositoryItem.classList.add('col-12', 'card', 'm-0', 'border', 'border-0', 'text-dark', 'align-baseline');
+
                 let repositoryLink = document.createElement('a');
                 repositoryLink.href = 'javascript:void(0);';
-                repositoryLink.classList.add('card-body', 'w-100');
-                let icon = document.createElement('i');
-                icon.classList.add('fas', 'fa-folder', 'text-primary', 'mx-2') ,
-                    repositoryLink.appendChild(icon);
+                repositoryLink.classList.add('card-footer', 'w-100', 'bg-green', 'm-1', 'text-bold', 'd-flex', 'justify-content-between');
+
+                let deleteIcon = document.createElement('i');
+                deleteIcon.classList.add('fas', 'fa-trash-alt');
+                deleteIcon.style.cursor = 'pointer'; // Set cursor to pointer to indicate it's clickable
+                deleteIcon.addEventListener('click', function(event) {
+                    event.stopPropagation(); // Prevent the repositoryLink click event from triggering
+                    event.preventDefault();
+                    // Here you can implement your delete logic
+                    // For now, let's just log a message
+                    console.log('Delete repository:', repository.name);
+                });
+
                 repositoryLink.appendChild(document.createTextNode(repository.name));
+                repositoryLink.appendChild(deleteIcon); // Append the delete icon to the right of the repository name
+
                 repositoryItem.appendChild(repositoryLink);
                 repositoriesList.appendChild(repositoryItem);
+
                 repositoryLink.addEventListener('click', function (event) {
                     event.preventDefault();
                     showRepositoryDetails(username, repository.name);
                 });
             });
         } catch (error) {
-            console.error('User not fond');
+            console.error('User not found');
         }
     });
 }
+
 
 async function showRepositoryDetails(username, repoName) {
     let repositoryDetails = document.getElementById('repositoryDetails');
@@ -51,14 +65,14 @@ async function showRepositoryDetails(username, repoName) {
         repositoryDetails.innerHTML = '';
         data.forEach(item => {
             let contentItem = document.createElement('ul');
-            contentItem.classList.add('col-12', 'card', 'm-0', 'border', 'border-0', 'border-bottom', 'text-warning');
+            contentItem.classList.add( 'col-12', 'card', 'm-0', 'border', 'border-0',  'text-dark' , 'align-baseline');
             let icon = document.createElement('i');
             icon.classList.add('fas', item.type === 'dir' ? 'fa-folder' : 'fa-file', 'mx-2', 'text-dark');
             let itemName = document.createElement('span');
             itemName.textContent = item.name;
             let contentLink = document.createElement('a');
             contentLink.href = 'javascript:void(0);';
-            contentLink.classList.add('card-body', 'w-100');
+            contentLink.classList.add('card-footer', 'w-100' , 'bg-light' , 'm-1' , 'text-bold');
             contentLink.appendChild(icon);
             contentLink.appendChild(itemName);
             contentLink.addEventListener('click', async () => {
@@ -92,14 +106,14 @@ async function showDirectoryContents(username, repoName, path) {
         repositoryDetails.innerHTML = '';
         data.forEach(item => {
             let contentItem = document.createElement('ul');
-            contentItem.classList.add('col-12', 'card', 'm-0', 'border', 'border-0', 'border-bottom', 'text-info');
+            contentItem.classList.add( 'col-12', 'card', 'm-0', 'border', 'border-0',  'text-light' , 'align-baseline');
             let icon = document.createElement('i');
             icon.classList.add('fas', item.type === 'dir' ? 'fa-folder' : 'fa-file', 'mx-2');
             let itemName = document.createElement('span');
             itemName.textContent = item.name;
             let contentLink = document.createElement('a');
             contentLink.href = 'javascript:void(0);';
-            contentLink.classList.add('card-body', 'w-100');
+            contentLink.classList.add('card-footer', 'w-100' , 'bg-secondary' , 'm-1' , );
             contentLink.appendChild(icon);
             contentLink.appendChild(itemName);
             contentLink.addEventListener('click', async () => {
@@ -107,7 +121,7 @@ async function showDirectoryContents(username, repoName, path) {
                     let fileResponse = await fetch(item.download_url);
                     let fileContent = await fileResponse.text();
                     let fileContentElement = document.createElement('pre');
-                    fileContentElement.classList.add('card', 'p-3', 'bg-secondary');
+                    fileContentElement.classList.add('card', 'p-3', 'bg-light' , 'm-5' );
                     fileContentElement.textContent = fileContent;
                     repositoryDetails.appendChild(fileContentElement);
                 } else if (item.type === 'dir') {
